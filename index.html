@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Skill Selector</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #output {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        #outputBox {
+            margin-top: 10px;
+            width: 100%;
+            height: 50px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Select Texts to See the Skills They Improve</h2>
+    <ul>Note: Press shift to select multiple texts</ul>
+    <label for="TextSelector">Choose texts:</label>
+    <select id="TextSelector" multiple size="5" onchange="displaySkills()">
+        <option value="art1">Impression, soleil levant (1872) - Claude Monet [A1]</option>
+        <option value="art2">La Nuit Étoilée (1881) - Vincent Van Gogh [A1]</option>
+        <option value="art3">Le Rêve (1910) - Henri Rosseau [A1]</option>
+          <option value="art4"> XYZ - ABC</option>
+           <option value="art5"> XYZ - ABC</option>
+          <option value="art6"> XYZ - ABC</option>
+        <option value="book1">Astérix et Obelix - Rene Goscinny & Albert Uderzo</option>
+    </select>
+    
+    <p id="output"></p>
+    <div id="outputBox"></div>
+    
+    <script>
+        const allSkills = {
+            "art1": ["Writing", "Cultural Awareness"],
+            "art2": ["Writing", "Reading", "Cultural Awareness"],
+            "art3": ["Writing", "Cultural Awareness", "Reading", "Speaking"],
+            "book1": ["Reading", "Cultural Awareness"]
+        };
+
+        function displaySkills() {
+            const selectedOptions = Array.from(document.getElementById("TextSelector").selectedOptions);
+            const selectedTexts = selectedOptions.map(option => option.value);
+            
+            let skillSet = new Set();
+            selectedTexts.forEach(text => {
+                if (allSkills[text]) {
+                    allSkills[text].forEach(skill => skillSet.add(skill));
+                }
+            });
+            
+            const skillsList = Array.from(skillSet).join(", ");
+            document.getElementById("output").textContent = "Skills Improved: " + (skillsList || "None");
+            document.getElementById("outputBox").textContent = skillsList;
+        }
+    </script>
+</body>
+</html>
